@@ -62,7 +62,7 @@ client.on('message', (message) => {
   }
 });
 
-function audioPlay(message, file) {
+const audioPlay = (message, file) => {
   // play audio function
   const voiceChannel = message.member.voice.channel; // get voicechannel
 
@@ -91,24 +91,22 @@ function audioPlay(message, file) {
   }
 }
 
-function helpMeSenpai(message) {
+const helpMeSenpai = (message) => {
   // help menu
-  const fileList = []; // initialize list
   const filenames = fs.readdirSync(__dirname + '/audio_files/'); // get the filenames for audio files
 
-  filenames.forEach((file) => {
-    // loop through each file, strip .mp3, and push to our list
-    file = file.replace('.mp3', '');
-    fileList.push(file);
-  });
-
   message.channel.send(
-    `🚨 🚨 🚨\t**Needing an appointment?**\t🚨 🚨 🚨\n\nTry ***!drbofa*** followed by your symptoms. Try ***!drbofa random*** if you're feeling spicy.\n\n**Currently known ailments:**`
+    `🚨 🚨 🚨\t**Needing an appointment?**\t🚨 🚨 🚨
+    
+    Try ***!drbofa*** followed by your symptoms. Try ***!drbofa random*** if you're feeling spicy.
+    
+    **Currently known ailments:** ✨
+    `
   );
-  message.channel.send(` ***\n🔹 ` + fileList.join('\t🔹 ') + `***`); // send fileList formatted to be italizied, and join list with new lines and '-'
+  message.channel.send(generateColumns(filenames, 4, 30)); // send fileList formatted to be italizied, and join list with new lines and '-'
 }
 
-function clearMessages(message) {
+const clearMessages = (message) => {
   const channel = message.channel; // TextChannel object
   const messageManager = channel.messages; // MessageManager object
 
@@ -132,7 +130,7 @@ function clearMessages(message) {
     });
 }
 
-function randomAudio(message) {
+const randomAudio = (message) => {
   const fileList = []; // initialize list
   const filenames = fs.readdirSync(__dirname + '/audio_files/'); // get the filenames for audio files
 
@@ -147,3 +145,21 @@ function randomAudio(message) {
 
 // needs to be the last line
 client.login(process.env.CLIENT_TOKEN); // login bot using token in dotenv
+
+const generateColumns = (strList, numColumns, padding) => {
+
+  const paddedStrings = strList.map((str) => {
+    str = str.replace('.mp3', '');
+    str = str.trim();
+    return str.padEnd(padding);
+  });
+
+  const columns = paddedStrings.reduce((list, str, index) => {
+    list += str; // add current name
+    (index + 1) % numColumns === 0 ? list += '\n' : null; // every *numColumns* add a line break
+    return list
+  });
+
+  // add codeblock designators around output to stop discord messing with formatting
+  return '```' + columns + '```'; 
+} 
