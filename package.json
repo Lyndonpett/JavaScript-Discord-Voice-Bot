@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "@discordjs/opus": "^0.5.3",
+    "@discordjs/voice": "^0.8.0",
+    "axios": "^0.25.0",
+    "discord.js": "^12.5.3",
+    "dotenv": "^14.3.2",
+    "ffmpeg-static": "^4.4.1",
+    "libsodium-wrappers": "^0.7.9"
+  },
+  "name": "drgarglonbofa",
+  "version": "1.0.0",
+  "description": "A bot to prescribe remedies for your ailments.",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyndonpett/MrGarglonBofa.git"
+  },
+  "author": "Lyndon Pettersson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lyndonpett/MrGarglonBofa/issues"
+  },
+  "homepage": "https://github.com/lyndonpett/MrGarglonBofa#readme",
+  "engines": {
+    "node": "16.x"
+  }
+}
